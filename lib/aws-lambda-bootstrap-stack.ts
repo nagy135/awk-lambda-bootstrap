@@ -1,16 +1,16 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { Lambda } from './lambda';
+import { ApiGateway } from './api-gateway';
 
 export class AwsLambdaBootstrapStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, props);
+	constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+		super(scope, id, props);
 
-    // The code that defines your stack goes here
+		const api = new ApiGateway(this, 'bootstrapapi');
 
-    // example resource
-    // const queue = new sqs.Queue(this, 'AwsLambdaBootstrapQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
-  }
+		const healthLambda = new Lambda(this, 'health.ts');
+
+		api.addIntegration('GET', '/health', healthLambda);
+	}
 }
