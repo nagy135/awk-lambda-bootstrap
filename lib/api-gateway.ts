@@ -8,13 +8,13 @@ export class ApiGateway extends RestApi {
 	constructor(scope: Construct, apiName: string) {
 		super(scope, "ApiGateway", {
 			restApiName: apiName,
-			// deployOptions: {
-			// 	accessLogDestination: new LogGroupLogDestination(new LogGroup(scope, "ApiLogGroup", {
-			// 		logGroupName: "api_gateway",
-			// 		retention: RetentionDays.ONE_DAY,
-			// 		removalPolicy: RemovalPolicy.DESTROY
-			// 	}))
-			// }
+			deployOptions: {
+				accessLogDestination: new LogGroupLogDestination(new LogGroup(scope, "ApiLogGroup", {
+					logGroupName: "api_gateway",
+					retention: RetentionDays.ONE_DAY,
+					removalPolicy: RemovalPolicy.DESTROY
+				}))
+			}
 		})
 	}
 
