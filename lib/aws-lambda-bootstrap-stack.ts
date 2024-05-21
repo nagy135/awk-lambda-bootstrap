@@ -10,7 +10,9 @@ export class AwsLambdaBootstrapStack extends cdk.Stack {
 		const api = new ApiGateway(this, 'bootstrapapi');
 
 		const healthLambda = new Lambda(this, 'health.ts');
+		const echoLambda = new Lambda(this, 'echo.ts');
 
 		api.addIntegration('GET', '/health', healthLambda);
+		api.addIntegration('POST', '/echo', echoLambda);
 	}
 }
